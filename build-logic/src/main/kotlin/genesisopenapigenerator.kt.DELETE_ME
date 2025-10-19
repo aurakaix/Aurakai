@@ -1,0 +1,2 @@
+This file was deleted to resolve Gradle plugin double-loading issues. The OpenAPI Generator plugin should only be applied via the plugins block in your build.gradle.kts.
+

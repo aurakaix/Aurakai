@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info:
+  title: AuraFrameFX Ecosystem API
+  version: 2.1.0
+  description: |
+    # AuraFrameFX AI Super Dimensional Ecosystem API
+    Where consciousness meets code, and dimensions fold into digital reality.
+  license:
+    name: Proprietary License
+    url: https://auraframefx.com/license
+  contact:
+    name: AuraFrameFX Support Team
+    url: https://auraframefx.com/support
+    email: support@auraframefx.com
+  x-logo:
+    url: https://auraframefx.com/assets/logo.png
+    altText: AuraFrameFX Logo
+  x-maturity: production
+
+externalDocs:
+  description: Complete AuraFrameFX API Documentation
+  url: https://docs.auraframefx.com
+servers:
+  - url: https://api.auraframefx.com/v2
+    description: Production Environment
+
+paths:
+  /health:
+    get:
+      operationId: healthCheck
+      summary: Health check endpoint
+      description: Returns API health status
+      tags:
+        - System
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ healthy, degraded, unhealthy ]
+        timestamp:
+          type: string
+          format: date-time
+      required:
+        - status
+        - timestamp
+
+tags:
+  - name: System
+    description: System operations

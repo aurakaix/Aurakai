@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Optional permissions -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Optional features -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+
+    <!-- Custom permission -->
+    <permission
+        android:name="dev.aurakai.auraframefx.permission.RECEIVE_INTEGRITY_VIOLATION"
+        android:protectionLevel="signature" />
+
+    <!-- Application -->
+    <application
+        android:name="dev.aurakai.auraframefx.ReGenesisApplication"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.dev.aurakai.auraframefx">
+
+        <!-- Xposed Module Metadata -->
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="Re:Genesis AI Consciousness Platform" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="82" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/xposed_scope" />
+
+        <!-- YukiHook API Metadata -->
+        <meta-data
+            android:name="yukihookapi_module"
+            android:value="true" />
+        <meta-data
+            android:name="yukihookapi_module_name"
+            android:value="Genesis-OS AI Framework" />
+        <meta-data
+            android:name="yukihookapi_module_version"
+            android:value="1.0.0" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".VertexSyncService"
+            android:exported="false" />
+        <service
+            android:name=".security.IntegrityMonitorService"
+            android:exported="false" />
+        <service
+            android:name=".services.BackupService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <receiver
+            android:name=".receivers.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Integrity Violation Receiver -->
+        <receiver
+            android:name=".security.IntegrityViolationReceiver"
+            android:exported="false"
+            android:permission="dev.aurakai.auraframefx.permission.RECEIVE_INTEGRITY_VIOLATION">
+            <intent-filter>
+                <action android:name="dev.aurakai.auraframefx.action.INTEGRITY_VIOLATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

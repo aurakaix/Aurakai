@@ -1,0 +1,33 @@
+# Genesis Protocol - CI/CD Pipeline
+image: eclipse-temurin:24-jdk
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+stages:
+  - build
+  - test
+
+build:debug:
+  stage: build
+  script:
+    - chmod +x ./gradlew
+    - ./gradlew assembleDebug --stacktrace
+  artifacts:
+    paths:
+      - app/build/outputs/apk/debug/*.apk
+    expire_in: 1 week
+
+test:unit:
+  stage: test
+  script:
+    - ./gradlew testDebugUnitTest
+  artifacts:
+    reports:
+      junit: "**/build/test-results/**/*.xml"
